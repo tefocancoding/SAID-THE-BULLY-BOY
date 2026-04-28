@@ -1,0 +1,1177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>BULLY SAID — Fragman v2</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Bungee+Inline&family=Zen+Dots&family=Noto+Serif+JP:wght@900&family=Special+Elite&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0a0a0c;
+    --paper:#f4ede1;
+    --blood:#d62f2f;
+    --gold:#f5c518;
+    --teal:#23d6c4;
+    --magenta:#ff2e88;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{height:100%;background:var(--ink);overflow:hidden;font-family:'Bebas Neue',sans-serif;color:var(--paper)}
+
+  .stage{
+    position:relative;width:100vw;height:100vh;overflow:hidden;
+    background:radial-gradient(ellipse at center,#1a1320 0%,#050507 70%);
+  }
+  .scene{
+    position:absolute;inset:0;opacity:0;
+    display:flex;align-items:center;justify-content:center;
+    overflow:hidden;
+  }
+  .stage::after{
+    content:"";position:absolute;inset:-50%;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300'><filter id='n'><feTurbulence baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/></svg>");
+    opacity:.10;pointer-events:none;mix-blend-mode:overlay;z-index:90;
+    animation:grain .15s steps(2) infinite;
+  }
+  @keyframes grain{to{transform:translate(-3%,2%)}}
+  .vignette{position:absolute;inset:0;pointer-events:none;z-index:80;
+    background:radial-gradient(ellipse at center,transparent 50%,rgba(0,0,0,.85) 100%);}
+
+  .jp{font-family:'Noto Serif JP',serif;font-weight:900;color:var(--blood);letter-spacing:.4em;text-shadow:0 0 30px rgba(214,47,47,.6);}
+
+  /* SCENE 1 */
+  #s1{background:#000}
+  .prod{text-align:center;}
+  .prod .top{font-family:'Special Elite';font-size:18px;letter-spacing:.6em;color:var(--paper);opacity:0;animation:fadeIn 1s .3s forwards;}
+  .prod .logo{margin:30px auto;width:120px;height:120px;border:3px solid var(--blood);display:flex;align-items:center;justify-content:center;transform:rotate(45deg);opacity:0;animation:popIn .8s 1s forwards;}
+  .prod .logo span{transform:rotate(-45deg);font-family:'Noto Serif JP';font-size:60px;color:var(--blood);font-weight:900}
+  .prod .name{font-family:'Bebas Neue';font-size:42px;letter-spacing:.3em;opacity:0;animation:fadeIn .8s 1.6s forwards;}
+  .prod .sub{font-family:'Special Elite';font-size:12px;letter-spacing:.4em;opacity:0;margin-top:10px;animation:fadeIn .8s 2s forwards;color:#888;}
+
+  @keyframes fadeIn{to{opacity:1}}
+  @keyframes popIn{0%{opacity:0;transform:rotate(45deg) scale(.3)}60%{opacity:1;transform:rotate(45deg) scale(1.1)}100%{opacity:1;transform:rotate(45deg) scale(1)}}
+
+  /* SCENE 2 */
+  #s2{background:linear-gradient(180deg,#1a0606 0%,#000 100%);}
+  .titlewrap{position:relative;text-align:center}
+  .titlewrap .jpbig{font-size:90px;opacity:0;animation:slideR 1s .2s forwards;}
+  .titlewrap .said{font-family:'Bungee Inline';font-size:180px;color:var(--paper);margin:10px 0;letter-spacing:.05em;
+    text-shadow:8px 8px 0 var(--blood),16px 16px 0 rgba(0,0,0,.4);opacity:0;animation:smash 1s .8s cubic-bezier(.2,1.5,.3,1) forwards;}
+  .titlewrap .bully{font-family:'Bebas Neue';font-size:70px;letter-spacing:.5em;color:var(--gold);opacity:0;animation:fadeIn .6s 1.6s forwards;}
+  .titlewrap .strap{margin-top:20px;font-family:'Special Elite';font-size:14px;letter-spacing:.5em;color:#aaa;opacity:0;animation:fadeIn .6s 2s forwards;}
+  @keyframes slideR{0%{opacity:0;transform:translateX(-100px)}100%{opacity:1;transform:translateX(0)}}
+  @keyframes smash{0%{opacity:0;transform:scale(3) rotate(-5deg);filter:blur(20px)}60%{opacity:1;transform:scale(.95) rotate(0);filter:blur(0)}100%{opacity:1;transform:scale(1)}}
+
+  .slash{position:absolute;top:0;left:-20%;width:140%;height:100%;pointer-events:none;}
+  .slash::before,.slash::after{content:"";position:absolute;height:4px;background:var(--paper);box-shadow:0 0 20px var(--paper);transform-origin:left center;}
+  .slash::before{top:30%;left:0;width:0;animation:slashIn .3s .9s forwards;transform:rotate(-15deg);}
+  .slash::after{top:65%;right:0;width:0;animation:slashIn2 .3s 1.05s forwards;transform:rotate(8deg);}
+  @keyframes slashIn{to{width:100%}}
+  @keyframes slashIn2{to{width:100%}}
+
+  /* CHARACTER CARDS */
+  .charscene{display:grid;grid-template-columns:1fr 1fr;width:100%;height:100%}
+  .charart{position:relative;display:flex;align-items:flex-end;justify-content:center;overflow:hidden}
+  .charinfo{padding:60px;display:flex;flex-direction:column;justify-content:center;position:relative;}
+  .charinfo .role{font-family:'Special Elite';font-size:14px;letter-spacing:.6em;color:var(--paper);opacity:.6;}
+  .charinfo .jpname{font-family:'Noto Serif JP';font-size:42px;font-weight:900;margin-top:10px;}
+  .charinfo .name{font-family:'Bungee Inline';font-size:74px;line-height:.95;margin-top:15px;letter-spacing:.02em;}
+  .charinfo .desc{font-family:'Special Elite';font-size:15px;letter-spacing:.12em;margin-top:25px;color:#ccc;line-height:1.7;max-width:420px;}
+  .charinfo .num{position:absolute;top:30px;right:60px;font-family:'Bungee Inline';font-size:200px;opacity:.08;}
+
+  .statgrid{display:grid;grid-template-columns:1fr 1fr;gap:14px 24px;margin-top:28px;max-width:420px;}
+  .stat{font-family:'Special Elite';font-size:11px;letter-spacing:.25em;color:#888;border-left:2px solid var(--blood);padding:6px 0 6px 12px;}
+  .stat b{display:block;color:var(--paper);font-size:15px;letter-spacing:.18em;margin-top:3px;}
+
+  .hometown{display:inline-flex;align-items:center;gap:10px;margin-top:16px;
+    border:1px solid currentColor;padding:8px 14px;font-family:'Special Elite';font-size:12px;
+    letter-spacing:.4em;width:fit-content;}
+  .hometown::before{content:"";width:8px;height:8px;background:currentColor;border-radius:50%;}
+
+  #s3 .charart{background:radial-gradient(circle at 50% 80%,#3a0a0a 0%,#000 70%);}
+  #s3 .jpname,#s3 .name,#s3 .hometown{color:var(--blood)}
+  #s3 .charinfo{background:#0a0a0c;}
+
+  #s4 .charart{background:radial-gradient(circle at 50% 80%,#0a2030 0%,#000 70%);}
+  #s4 .jpname,#s4 .name,#s4 .hometown{color:var(--teal)}
+  #s4 .charinfo{background:#08080a;}
+
+  #s5 .charart{background:radial-gradient(circle at 50% 80%,#3a2a05 0%,#000 70%);}
+  #s5 .jpname,#s5 .name,#s5 .hometown{color:var(--gold)}
+  #s5 .charinfo{background:#08080a;}
+
+  .speedlines{position:absolute;inset:0;pointer-events:none;
+    background:repeating-linear-gradient(90deg,transparent 0,transparent 18px,rgba(255,255,255,.04) 18px,rgba(255,255,255,.04) 19px);
+    animation:speed 2s linear infinite;}
+  @keyframes speed{from{transform:translateX(0)}to{transform:translateX(-40px)}}
+
+  /* ACTION */
+  #s6{background:radial-gradient(circle at 30% 40%,#2b0606 0%,#000 80%);}
+  #s7{background:radial-gradient(circle at 70% 50%,#3a1a05 0%,#000 80%);}
+  .actionwrap{position:relative;width:100%;height:100%;}
+  .actionsvg{width:100%;height:100%;}
+  .actiontext{position:absolute;font-family:'Bungee Inline';color:var(--gold);text-shadow:6px 6px 0 var(--blood),12px 12px 0 #000;transform:rotate(-8deg);}
+  .actiontext.t6{top:8%;left:6%;font-size:90px;opacity:0;animation:bounceIn .6s .3s forwards;}
+  .actiontext.t7{bottom:8%;right:6%;font-size:90px;opacity:0;animation:bounceIn .6s .3s forwards;color:var(--magenta);text-shadow:6px 6px 0 #000,12px 12px 0 var(--gold);transform:rotate(6deg);}
+  @keyframes bounceIn{0%{opacity:0;transform:scale(2) rotate(-8deg)}60%{opacity:1;transform:scale(.9) rotate(-8deg)}100%{opacity:1;transform:scale(1) rotate(-8deg)}}
+
+  /* FINAL */
+  #s8{background:radial-gradient(circle at center,#1a0606 0%,#000 80%);}
+  .finalwrap{text-align:center;position:relative}
+  .finalwrap .jpbig{font-family:'Noto Serif JP';font-weight:900;font-size:60px;color:var(--blood);letter-spacing:.4em;opacity:0;animation:fadeIn .6s .2s forwards}
+  .finalwrap .bigtitle{font-family:'Bungee Inline';font-size:240px;color:var(--paper);line-height:.9;margin:20px 0;text-shadow:10px 10px 0 var(--blood),20px 20px 0 rgba(0,0,0,.5);opacity:0;animation:smash 1s .6s cubic-bezier(.2,1.5,.3,1) forwards;}
+  .finalwrap .coming{font-family:'Bebas Neue';font-size:32px;letter-spacing:.6em;color:var(--gold);opacity:0;animation:fadeIn .6s 1.5s forwards;margin-top:30px;}
+  .finalwrap .ep{font-family:'Special Elite';font-size:14px;letter-spacing:.5em;color:#888;margin-top:15px;opacity:0;animation:fadeIn .6s 1.9s forwards;}
+
+  /* HUD */
+  .hud{position:fixed;bottom:20px;left:20px;display:flex;gap:10px;z-index:100;font-family:'Special Elite';font-size:12px;letter-spacing:.2em;color:#aaa;}
+  .hud button{background:#111;border:1px solid #444;color:var(--paper);padding:10px 18px;cursor:pointer;font-family:'Special Elite';letter-spacing:.2em;font-size:11px;text-transform:uppercase;}
+  .hud button:hover{background:var(--blood);border-color:var(--blood)}
+  .hud button.skip{border-color:var(--gold);color:var(--gold)}
+  .hud button.skip:hover{background:var(--gold);color:#000}
+  .timer{position:fixed;top:20px;right:20px;font-family:'Special Elite';font-size:13px;letter-spacing:.3em;color:#777;z-index:100;border:1px solid #333;padding:6px 12px;background:rgba(0,0,0,.5);}
+  .scenelabel{position:fixed;top:20px;left:20px;font-family:'Special Elite';font-size:11px;letter-spacing:.4em;color:#666;z-index:100;}
+
+  .shake{animation:shake .12s linear infinite}
+  @keyframes shake{0%{transform:translate(0,0)}25%{transform:translate(-3px,2px)}50%{transform:translate(2px,-2px)}75%{transform:translate(-2px,-3px)}100%{transform:translate(0,0)}}
+
+  /* START SCREEN */
+  .startScreen{position:fixed;inset:0;background:#000;z-index:1000;display:flex;align-items:center;justify-content:center;flex-direction:column;cursor:pointer;}
+  .startScreen .jpbig{font-family:'Noto Serif JP';font-weight:900;font-size:80px;color:var(--blood);letter-spacing:.4em;text-shadow:0 0 30px rgba(214,47,47,.5)}
+  .startScreen .label{font-family:'Bebas Neue';font-size:40px;letter-spacing:.4em;margin-top:30px;color:var(--paper)}
+  .startScreen .blink{font-family:'Special Elite';font-size:14px;letter-spacing:.5em;color:var(--gold);margin-top:60px;animation:blink 1s steps(2) infinite}
+  @keyframes blink{50%{opacity:0}}
+  .startScreen .note{font-family:'Special Elite';font-size:11px;color:#666;letter-spacing:.2em;margin-top:40px;max-width:560px;text-align:center;line-height:1.7;}
+
+  /* MINI GAMES SCREEN */
+  #games{position:fixed;inset:0;background:#000;z-index:200;display:none;flex-direction:column;}
+  #games.active{display:flex;}
+  .gameshead{padding:30px 40px 20px;display:flex;justify-content:space-between;align-items:flex-end;border-bottom:1px solid #222;}
+  .gameshead h1{font-family:'Bungee Inline';font-size:48px;letter-spacing:.05em;}
+  .gameshead h1 .red{color:var(--blood)}
+  .gameshead .sub{font-family:'Special Elite';font-size:12px;color:#777;letter-spacing:.4em;margin-top:8px;}
+  .gameshead .scoreboard{font-family:'Special Elite';font-size:13px;letter-spacing:.3em;color:#aaa;text-align:right;}
+  .gameshead .scoreboard b{color:var(--gold);font-size:24px;font-family:'Bungee Inline';display:block;margin-top:4px;}
+
+  .gameswrap{flex:1;display:grid;grid-template-columns:1fr 1fr;gap:0;}
+  .gamebox{position:relative;overflow:hidden;border-right:1px solid #222;}
+  .gamebox:last-child{border-right:none;}
+  .gamebox .label{position:absolute;top:20px;left:20px;font-family:'Special Elite';font-size:11px;letter-spacing:.4em;color:#888;z-index:5;}
+  .gamebox .label b{color:var(--paper);display:block;font-family:'Bebas Neue';font-size:24px;letter-spacing:.2em;margin-top:4px;}
+  .gamebox .scorelabel{position:absolute;top:20px;right:20px;z-index:5;font-family:'Bungee Inline';font-size:36px;color:var(--gold);}
+  .gamebox .timerlabel{position:absolute;bottom:20px;left:20px;font-family:'Special Elite';font-size:11px;letter-spacing:.3em;color:#aaa;z-index:5;}
+  .gamebox .timerlabel b{color:var(--blood);font-family:'Bebas Neue';font-size:18px;letter-spacing:.15em;display:inline-block;margin-left:10px;}
+  .gamebox .hint{position:absolute;bottom:20px;right:20px;font-family:'Special Elite';font-size:10px;letter-spacing:.3em;color:#666;z-index:5;}
+
+  .gamearea{position:absolute;inset:0;cursor:pointer;}
+
+  /* GAME 1 — Kick Mefo */
+  .gamebox.g1{background:radial-gradient(circle at 60% 70%,#3a1a05 0%,#0a0604 80%);}
+  .mefoTarget{position:absolute;left:50%;top:55%;transform:translate(-50%,-50%);transition:transform .3s cubic-bezier(.2,2,.3,1),opacity .2s, left .3s, top .3s;}
+  .mefoTarget.flying{transform:translate(160%,-180%) rotate(540deg);opacity:0;}
+
+  /* GAME 2 — Hold Omer */
+  .gamebox.g2{background:radial-gradient(circle at 40% 30%,#2a0606 0%,#0a0404 80%);}
+  .gripbar{position:absolute;left:50%;bottom:15%;transform:translateX(-50%);width:70%;height:18px;background:#1a1a1a;border:2px solid #333;}
+  .gripfill{height:100%;background:linear-gradient(90deg,var(--blood),var(--gold));width:100%;transition:width .15s linear;}
+  .gripbar .barlabel{position:absolute;left:0;right:0;top:-22px;text-align:center;font-family:'Special Elite';font-size:10px;letter-spacing:.4em;color:#aaa;}
+  .windowFrame{position:absolute;left:50%;top:30%;transform:translate(-50%,-50%);width:280px;height:240px;background:#0a0606;border:8px solid #6a4830;}
+  .windowFrame::before,.windowFrame::after{content:"";position:absolute;background:#6a4830;}
+  .windowFrame::before{left:50%;top:0;bottom:0;width:6px;transform:translateX(-50%);}
+  .windowFrame::after{top:50%;left:0;right:0;height:6px;transform:translateY(-50%);}
+  .saidInWindow{position:absolute;left:50%;top:30%;transform:translate(-50%,-50%);}
+  .omerHang{position:absolute;left:50%;top:50%;transition:top .2s, transform .1s;}
+  .omerHang.fall{top:120% !important;transition:top 1s cubic-bezier(.5,0,1,.5);}
+
+  .tapHint{position:absolute;font-family:'Bungee Inline';font-size:60px;color:var(--gold);text-shadow:4px 4px 0 var(--blood);opacity:0;pointer-events:none;}
+  .tapHint.show{animation:tapPop .5s forwards;}
+  @keyframes tapPop{0%{opacity:1;transform:scale(.5)}100%{opacity:0;transform:scale(2.2)}}
+
+  .gameOverCard{position:absolute;inset:0;background:rgba(0,0,0,.85);display:none;align-items:center;justify-content:center;flex-direction:column;text-align:center;z-index:10;}
+  .gameOverCard.show{display:flex;}
+  .gameOverCard .big{font-family:'Bungee Inline';font-size:80px;color:var(--blood);text-shadow:6px 6px 0 #000;}
+  .gameOverCard .score{font-family:'Bebas Neue';font-size:36px;letter-spacing:.3em;color:var(--gold);margin-top:20px;}
+  .gameOverCard button{margin-top:30px;background:transparent;border:2px solid var(--paper);color:var(--paper);font-family:'Special Elite';padding:12px 24px;letter-spacing:.3em;cursor:pointer;font-size:13px;}
+  .gameOverCard button:hover{background:var(--paper);color:#000;}
+
+  .gamesfooter{padding:20px 40px;display:flex;justify-content:space-between;align-items:center;border-top:1px solid #222;}
+  .gamesfooter button{background:#111;border:1px solid #444;color:var(--paper);padding:12px 24px;font-family:'Special Elite';letter-spacing:.3em;cursor:pointer;font-size:12px;}
+  .gamesfooter button:hover{background:var(--blood);border-color:var(--blood);}
+  .gamesfooter .credit{font-family:'Special Elite';font-size:11px;color:#555;letter-spacing:.3em;}
+</style>
+</head>
+<body>
+
+<div class="startScreen" id="startScreen">
+  <div class="jpbig">サイド</div>
+  <div class="label">► PLAY OPENING</div>
+  <div class="blink">CLICK ANYWHERE TO START</div>
+  <div class="note">audio is an original soft synth-rock placeholder. mini tap-games unlock after the opening — or skip with the SKIP TO GAMES button.</div>
+</div>
+
+<div class="stage" id="stage">
+  <div class="vignette"></div>
+
+  <!-- SCENE 1 -->
+  <section class="scene" id="s1">
+    <div class="prod">
+      <div class="top">A SAID-OBI ANIMATION PRESENTS</div>
+      <div class="logo"><span>悪</span></div>
+      <div class="name">SAID-OBI STUDIOS</div>
+      <div class="sub">EST. 2026 — TOKYO/ISTANBUL</div>
+    </div>
+  </section>
+
+  <!-- SCENE 2 -->
+  <section class="scene" id="s2">
+    <div class="slash"></div>
+    <div class="titlewrap">
+      <div class="jp jpbig">いじめっ子の言葉</div>
+      <div class="said">SAID</div>
+      <div class="bully">— BULLY —</div>
+      <div class="strap">A NEW SHONEN ANIME · COMING THIS SEASON</div>
+    </div>
+  </section>
+
+  <!-- SCENE 3 — SAID -->
+  <section class="scene" id="s3">
+    <div class="charscene">
+      <div class="charart">
+        <div class="speedlines"></div>
+        <svg viewBox="0 0 400 600" width="100%" height="100%" preserveAspectRatio="xMidYEnd meet">
+          <ellipse cx="200" cy="580" rx="120" ry="14" fill="#000" opacity=".5"/>
+          <rect x="160" y="380" width="34" height="170" fill="#1a1a1a"/>
+          <rect x="206" y="380" width="34" height="170" fill="#1a1a1a"/>
+          <rect x="155" y="540" width="44" height="22" fill="#0a0a0a"/>
+          <rect x="201" y="540" width="44" height="22" fill="#0a0a0a"/>
+          <path d="M120 220 Q200 200 280 220 L290 390 Q200 410 110 390 Z" fill="#7a1818"/>
+          <path d="M155 240 Q200 235 245 240 L240 330 Q200 340 160 330 Z" fill="#9a2020" opacity=".6"/>
+          <path d="M120 220 Q90 260 95 360 Q105 380 130 380 Q135 320 140 230 Z" fill="#e6c2a0"/>
+          <path d="M280 220 Q310 260 305 360 Q295 380 270 380 Q265 320 260 230 Z" fill="#e6c2a0"/>
+          <ellipse cx="105" cy="295" rx="13" ry="35" fill="#c89a78" opacity=".7"/>
+          <ellipse cx="295" cy="295" rx="13" ry="35" fill="#c89a78" opacity=".7"/>
+          <circle cx="112" cy="375" r="22" fill="#e6c2a0"/>
+          <circle cx="288" cy="375" r="22" fill="#e6c2a0"/>
+          <line x1="100" y1="370" x2="124" y2="370" stroke="#a87858" stroke-width="2"/>
+          <line x1="276" y1="370" x2="300" y2="370" stroke="#a87858" stroke-width="2"/>
+          <rect x="180" y="180" width="40" height="50" fill="#e6c2a0"/>
+          <ellipse cx="200" cy="140" rx="55" ry="62" fill="#e6c2a0"/>
+          <path d="M150 145 Q200 200 250 145 Q250 175 200 200 Q150 175 150 145Z" fill="#c89a78" opacity=".5"/>
+          <path d="M145 100 Q140 60 175 50 Q200 30 225 50 Q260 60 255 100 Q265 95 258 130 L240 110 L225 120 L210 100 L195 120 L180 100 L165 120 L150 110 L142 130 Q135 95 145 100 Z" fill="#2b1a0e"/>
+          <path d="M165 135 L185 132 L185 142 L165 145 Z" fill="#fff"/>
+          <path d="M215 132 L235 135 L235 145 L215 142 Z" fill="#fff"/>
+          <ellipse cx="178" cy="138" rx="4" ry="5" fill="#2b1a0e"/>
+          <ellipse cx="222" cy="138" rx="4" ry="5" fill="#2b1a0e"/>
+          <path d="M160 120 L188 128 L186 132 L160 124 Z" fill="#2b1a0e"/>
+          <path d="M240 120 L212 128 L214 132 L240 124 Z" fill="#2b1a0e"/>
+          <path d="M180 168 Q205 178 225 165 L222 172 Q205 182 180 172 Z" fill="#5a1818"/>
+          <path d="M183 169 L222 170" stroke="#fff" stroke-width="1.5"/>
+          <line x1="155" y1="150" x2="170" y2="170" stroke="#a04040" stroke-width="2"/>
+          <circle cx="148" cy="150" r="3" fill="#f5c518"/>
+        </svg>
+      </div>
+      <div class="charinfo">
+        <div class="num">01</div>
+        <div class="role">— THE BULLY —</div>
+        <div class="jpname">サイド</div>
+        <div class="name">SAID</div>
+        <div class="hometown">FROM ISTANBUL</div>
+        <div class="desc">KING OF THE BACK COURTYARD. NEVER MET A LUNCH MONEY HE COULDN'T LIBERATE. SOMEHOW STILL CHARMING.</div>
+        <div class="statgrid">
+          <div class="stat">HEIGHT<b>TALL</b></div>
+          <div class="stat">BUILD<b>MUSCULAR</b></div>
+          <div class="stat">HAIR<b>BRUNETTE</b></div>
+          <div class="stat">SIGNATURE<b>HEADLOCK</b></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SCENE 4 — OMER OSMAN -->
+  <section class="scene" id="s4">
+    <div class="charscene">
+      <div class="charinfo">
+        <div class="num">02</div>
+        <div class="role">— VICTIM ONE —</div>
+        <div class="jpname">オメル・オスマン</div>
+        <div class="name">OMER<br>OSMAN</div>
+        <div class="hometown">FROM ESKİŞEHİR</div>
+        <div class="desc">OWES SAID THREE WEEKS OF HOMEWORK AND ONE PUDDING CUP. CAME TO THE BIG CITY FOR AN EDUCATION — INSTEAD GOT AN UPSIDE-DOWN VIEW.</div>
+        <div class="statgrid">
+          <div class="stat">HEIGHT<b>SHORT</b></div>
+          <div class="stat">BUILD<b>SKINNY</b></div>
+          <div class="stat">HAIR<b>BUZZCUT</b></div>
+          <div class="stat">STATUS<b>DANGLING</b></div>
+        </div>
+      </div>
+      <div class="charart">
+        <div class="speedlines"></div>
+        <svg viewBox="0 0 400 600" width="100%" height="100%" preserveAspectRatio="xMidYEnd meet">
+          <ellipse cx="200" cy="580" rx="80" ry="10" fill="#000" opacity=".5"/>
+          <rect x="180" y="430" width="18" height="130" fill="#27384a"/>
+          <rect x="202" y="430" width="18" height="130" fill="#27384a"/>
+          <rect x="175" y="552" width="28" height="14" fill="#111"/>
+          <rect x="197" y="552" width="28" height="14" fill="#111"/>
+          <path d="M170 290 Q200 282 230 290 L228 435 Q200 442 172 435 Z" fill="#3aaad8"/>
+          <path d="M190 290 L210 290 L208 305 L192 305 Z" fill="#258"/>
+          <rect x="156" y="295" width="14" height="120" fill="#e8c8a8"/>
+          <rect x="230" y="295" width="14" height="120" fill="#e8c8a8"/>
+          <circle cx="163" cy="420" r="11" fill="#e8c8a8"/>
+          <circle cx="237" cy="420" r="11" fill="#e8c8a8"/>
+          <rect x="190" y="260" width="20" height="35" fill="#e8c8a8"/>
+          <ellipse cx="200" cy="225" rx="42" ry="48" fill="#e8c8a8"/>
+          <path d="M160 200 Q200 182 240 200 Q240 215 200 215 Q160 215 160 200 Z" fill="#3a2820" opacity=".55"/>
+          <ellipse cx="183" cy="222" rx="5" ry="7" fill="#fff"/>
+          <ellipse cx="217" cy="222" rx="5" ry="7" fill="#fff"/>
+          <ellipse cx="183" cy="224" rx="2.5" ry="3.5" fill="#000"/>
+          <ellipse cx="217" cy="224" rx="2.5" ry="3.5" fill="#000"/>
+          <path d="M174 210 L192 215" stroke="#3a2820" stroke-width="2.2"/>
+          <path d="M226 210 L208 215" stroke="#3a2820" stroke-width="2.2"/>
+          <path d="M188 246 Q200 240 212 246" stroke="#5a3020" stroke-width="2" fill="none"/>
+          <ellipse cx="240" cy="220" rx="4" ry="7" fill="#9fdfff" opacity=".9"/>
+          <ellipse cx="246" cy="232" rx="3" ry="5" fill="#9fdfff" opacity=".9"/>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- SCENE 5 — MEFO -->
+  <section class="scene" id="s5">
+    <div class="charscene">
+      <div class="charart">
+        <div class="speedlines"></div>
+        <svg viewBox="0 0 400 600" width="100%" height="100%" preserveAspectRatio="xMidYEnd meet">
+          <ellipse cx="200" cy="580" rx="85" ry="11" fill="#000" opacity=".5"/>
+          <rect x="178" y="420" width="20" height="140" fill="#3a3328"/>
+          <rect x="202" y="420" width="20" height="140" fill="#3a3328"/>
+          <rect x="172" y="552" width="30" height="14" fill="#111"/>
+          <rect x="198" y="552" width="30" height="14" fill="#111"/>
+          <path d="M168 280 Q200 272 232 280 L230 425 Q200 432 170 425 Z" fill="#d4a72c"/>
+          <line x1="195" y1="285" x2="193" y2="320" stroke="#4a3a10" stroke-width="2"/>
+          <line x1="205" y1="285" x2="207" y2="320" stroke="#4a3a10" stroke-width="2"/>
+          <rect x="153" y="285" width="15" height="130" fill="#e8c8a8"/>
+          <rect x="232" y="285" width="15" height="130" fill="#e8c8a8"/>
+          <circle cx="160" cy="420" r="12" fill="#e8c8a8"/>
+          <circle cx="240" cy="420" r="12" fill="#e8c8a8"/>
+          <rect x="190" y="250" width="20" height="35" fill="#e8c8a8"/>
+          <ellipse cx="200" cy="215" rx="44" ry="50" fill="#e8c8a8"/>
+          <path d="M156 200 Q150 170 175 158 Q200 145 225 158 Q250 170 244 200 Q244 205 232 198 L228 210 L218 198 L210 210 L200 195 L190 210 L182 198 L172 210 L168 198 Q156 205 156 200 Z" fill="#f0d97a"/>
+          <path d="M180 165 Q200 155 220 165" stroke="#fff5b8" stroke-width="2" fill="none"/>
+          <ellipse cx="184" cy="215" rx="6" ry="8" fill="#fff"/>
+          <ellipse cx="216" cy="215" rx="6" ry="8" fill="#fff"/>
+          <ellipse cx="184" cy="217" rx="3" ry="4" fill="#3a6b3a"/>
+          <ellipse cx="216" cy="217" rx="3" ry="4" fill="#3a6b3a"/>
+          <path d="M174 202 L194 206" stroke="#a8852a" stroke-width="2.4"/>
+          <path d="M226 202 L206 206" stroke="#a8852a" stroke-width="2.4"/>
+          <path d="M188 240 Q200 246 212 240" stroke="#5a3020" stroke-width="2" fill="none"/>
+          <ellipse cx="158" cy="210" rx="3.5" ry="6" fill="#9fdfff" opacity=".9"/>
+        </svg>
+      </div>
+      <div class="charinfo">
+        <div class="num">03</div>
+        <div class="role">— VICTIM TWO —</div>
+        <div class="jpname">メフォ</div>
+        <div class="name">MEFO</div>
+        <div class="hometown">FROM KAYSERİ</div>
+        <div class="desc">CAN OUTRUN A BUS, CANNOT OUTRUN SAID. KEEPS A SPARE PAIR OF PANTS IN HIS LOCKER. HOMETOWN HERO, FOREIGN-CITY VICTIM.</div>
+        <div class="statgrid">
+          <div class="stat">HEIGHT<b>SHORT</b></div>
+          <div class="stat">BUILD<b>SKINNY</b></div>
+          <div class="stat">HAIR<b>BLONDE / SHORT</b></div>
+          <div class="stat">STATUS<b>FLEEING</b></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SCENE 6 — DANGLE -->
+  <section class="scene" id="s6">
+    <div class="actionwrap">
+      <svg class="actionsvg" viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#5a1818"/><stop offset="100%" stop-color="#1a0606"/>
+          </linearGradient>
+          <radialGradient id="moon" cx=".5" cy=".5">
+            <stop offset="0%" stop-color="#fff5d0"/><stop offset="100%" stop-color="#f5c518" stop-opacity="0"/>
+          </radialGradient>
+        </defs>
+        <rect width="1200" height="800" fill="url(#sky)"/>
+        <circle cx="980" cy="170" r="80" fill="url(#moon)"/>
+        <circle cx="980" cy="170" r="50" fill="#fff5d0"/>
+        <rect x="0" y="420" width="180" height="380" fill="#1a1014"/>
+        <rect x="200" y="380" width="140" height="420" fill="#221620"/>
+        <rect x="900" y="420" width="160" height="380" fill="#1a1014"/>
+        <rect x="1080" y="400" width="120" height="400" fill="#221620"/>
+        <g fill="#f5c518" opacity=".7">
+          <rect x="20" y="460" width="10" height="14"/><rect x="50" y="460" width="10" height="14"/>
+          <rect x="20" y="500" width="10" height="14"/><rect x="80" y="540" width="10" height="14"/>
+          <rect x="220" y="420" width="10" height="14"/><rect x="260" y="450" width="10" height="14"/>
+          <rect x="920" y="460" width="10" height="14"/><rect x="970" y="500" width="10" height="14"/>
+          <rect x="1100" y="450" width="10" height="14"/><rect x="1140" y="500" width="10" height="14"/>
+        </g>
+        <rect x="350" y="200" width="540" height="600" fill="#2a1818"/>
+        <rect x="350" y="200" width="540" height="40" fill="#1a0a0a"/>
+        <g stroke="#1a0a0a" stroke-width="1" opacity=".6">
+          <line x1="350" y1="280" x2="890" y2="280"/>
+          <line x1="350" y1="360" x2="890" y2="360"/>
+          <line x1="350" y1="440" x2="890" y2="440"/>
+          <line x1="350" y1="520" x2="890" y2="520"/>
+          <line x1="350" y1="600" x2="890" y2="600"/>
+          <line x1="350" y1="680" x2="890" y2="680"/>
+        </g>
+        <rect x="500" y="280" width="240" height="220" fill="#0a0a0a"/>
+        <rect x="500" y="280" width="240" height="220" fill="none" stroke="#6a4830" stroke-width="8"/>
+        <line x1="620" y1="280" x2="620" y2="500" stroke="#6a4830" stroke-width="6"/>
+        <line x1="500" y1="390" x2="740" y2="390" stroke="#6a4830" stroke-width="6"/>
+        <rect x="508" y="288" width="224" height="204" fill="#3a1010"/>
+        <g>
+          <path d="M540 320 Q620 300 700 320 L710 470 Q620 480 530 470 Z" fill="#7a1818"/>
+          <path d="M570 340 Q620 332 670 340 L668 430 Q620 440 572 430 Z" fill="#9a2020" opacity=".5"/>
+          <ellipse cx="620" cy="280" rx="48" ry="55" fill="#e6c2a0"/>
+          <path d="M572 245 Q580 215 620 205 Q660 215 668 245 Q670 250 660 248 L645 232 L630 245 L620 230 L610 245 L595 232 L580 248 Q572 250 572 245 Z" fill="#2b1a0e"/>
+          <ellipse cx="605" cy="278" rx="5" ry="6" fill="#fff"/>
+          <ellipse cx="635" cy="278" rx="5" ry="6" fill="#fff"/>
+          <ellipse cx="606" cy="280" rx="3" ry="4" fill="#000"/>
+          <ellipse cx="636" cy="280" rx="3" ry="4" fill="#000"/>
+          <path d="M598 262 L618 270 L616 274 L598 266 Z" fill="#2b1a0e"/>
+          <path d="M642 262 L622 270 L624 274 L642 266 Z" fill="#2b1a0e"/>
+          <path d="M605 305 Q620 315 638 302 L635 312 Q620 320 605 312 Z" fill="#5a1818"/>
+          <path d="M608 308 L633 306" stroke="#fff" stroke-width="1.5"/>
+          <path d="M700 360 Q780 380 870 470 Q880 480 868 488 Q780 410 700 405 Z" fill="#e6c2a0"/>
+          <path d="M540 360 Q500 400 510 460" stroke="#e6c2a0" stroke-width="32" fill="none" stroke-linecap="round"/>
+          <ellipse cx="870" cy="478" rx="22" ry="18" fill="#e6c2a0" transform="rotate(20 870 478)"/>
+        </g>
+        <g>
+          <rect x="855" y="470" width="22" height="40" fill="#e8c8a8"/>
+          <rect x="848" y="500" width="20" height="120" fill="#27384a"/>
+          <rect x="870" y="500" width="20" height="120" fill="#27384a"/>
+          <rect x="843" y="498" width="32" height="14" fill="#111"/>
+          <rect x="865" y="498" width="32" height="14" fill="#111"/>
+          <path d="M838 620 Q870 612 902 620 L900 720 Q870 728 840 720 Z" fill="#3aaad8"/>
+          <rect x="826" y="618" width="12" height="100" fill="#e8c8a8"/>
+          <rect x="900" y="618" width="12" height="100" fill="#e8c8a8"/>
+          <circle cx="832" cy="722" r="10" fill="#e8c8a8"/>
+          <circle cx="906" cy="722" r="10" fill="#e8c8a8"/>
+          <ellipse cx="870" cy="745" rx="32" ry="38" fill="#e8c8a8"/>
+          <path d="M838 745 Q870 760 902 745 Q902 735 870 730 Q838 735 838 745 Z" fill="#3a2820" opacity=".55"/>
+          <ellipse cx="858" cy="730" rx="4" ry="5" fill="#fff"/>
+          <ellipse cx="882" cy="730" rx="4" ry="5" fill="#fff"/>
+          <ellipse cx="858" cy="731" rx="2" ry="3" fill="#000"/>
+          <ellipse cx="882" cy="731" rx="2" ry="3" fill="#000"/>
+          <ellipse cx="870" cy="755" rx="8" ry="12" fill="#220"/>
+          <ellipse cx="870" cy="757" rx="5" ry="8" fill="#a01010"/>
+          <ellipse cx="848" cy="725" rx="3" ry="5" fill="#9fdfff"/>
+          <ellipse cx="892" cy="725" rx="3" ry="5" fill="#9fdfff"/>
+          <ellipse cx="838" cy="710" rx="2" ry="4" fill="#9fdfff"/>
+          <ellipse cx="902" cy="710" rx="2" ry="4" fill="#9fdfff"/>
+        </g>
+        <g stroke="#fff" stroke-width="2" opacity=".4">
+          <line x1="780" y1="380" x2="920" y2="360"/>
+          <line x1="800" y1="430" x2="940" y2="420"/>
+          <line x1="780" y1="540" x2="920" y2="560"/>
+          <line x1="780" y1="600" x2="920" y2="620"/>
+        </g>
+        <g transform="translate(180,720)">
+          <circle cx="0" cy="-15" r="8" fill="#e8c8a8"/>
+          <rect x="-7" y="-7" width="14" height="22" fill="#3a4"/>
+          <line x1="6" y1="0" x2="20" y2="-8" stroke="#e8c8a8" stroke-width="3"/>
+        </g>
+        <g transform="translate(220,725)">
+          <circle cx="0" cy="-15" r="8" fill="#e8c8a8"/>
+          <rect x="-7" y="-7" width="14" height="22" fill="#a44"/>
+          <line x1="-6" y1="0" x2="-18" y2="-8" stroke="#e8c8a8" stroke-width="3"/>
+        </g>
+      </svg>
+      <div class="actiontext t6">DANGLE!!</div>
+    </div>
+  </section>
+
+  <!-- SCENE 7 — KICK -->
+  <section class="scene" id="s7">
+    <div class="actionwrap">
+      <svg class="actionsvg" viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <radialGradient id="impactGrad">
+            <stop offset="0%" stop-color="#fff" stop-opacity="1"/>
+            <stop offset="40%" stop-color="#f5c518" stop-opacity=".9"/>
+            <stop offset="100%" stop-color="#d62f2f" stop-opacity="0"/>
+          </radialGradient>
+        </defs>
+        <rect width="1200" height="800" fill="#2a1610"/>
+        <rect y="500" width="1200" height="300" fill="#1a0c08"/>
+        <g stroke="#0a0604" stroke-width="2" opacity=".6">
+          <line x1="0" y1="540" x2="1200" y2="540"/>
+          <line x1="0" y1="600" x2="1200" y2="600"/>
+          <line x1="0" y1="680" x2="1200" y2="680"/>
+        </g>
+        <g>
+          <rect x="0" y="120" width="1200" height="380" fill="#3a2418"/>
+          <g fill="#221008" stroke="#0a0604">
+            <rect x="60" y="160" width="100" height="320"/><rect x="180" y="160" width="100" height="320"/>
+            <rect x="300" y="160" width="100" height="320"/><rect x="420" y="160" width="100" height="320"/>
+            <rect x="780" y="160" width="100" height="320"/><rect x="900" y="160" width="100" height="320"/>
+            <rect x="1020" y="160" width="100" height="320"/>
+          </g>
+          <g fill="#1a0a04">
+            <circle cx="140" cy="320" r="4"/><circle cx="260" cy="320" r="4"/>
+            <circle cx="380" cy="320" r="4"/><circle cx="500" cy="320" r="4"/>
+            <circle cx="860" cy="320" r="4"/><circle cx="980" cy="320" r="4"/><circle cx="1100" cy="320" r="4"/>
+          </g>
+        </g>
+        <g transform="translate(200,250)">
+          <rect x="60" y="220" width="32" height="180" fill="#1a1a1a"/>
+          <rect x="55" y="392" width="42" height="20" fill="#0a0a0a"/>
+          <path d="M85 230 Q200 240 360 280 Q380 290 370 308 Q220 280 92 270 Z" fill="#1a1a1a"/>
+          <path d="M340 270 L400 285 L405 305 L342 296 Z" fill="#0a0a0a"/>
+          <path d="M30 60 Q100 50 170 60 L178 230 Q100 240 22 230 Z" fill="#7a1818"/>
+          <path d="M65 80 Q100 75 135 80 L132 180 Q100 190 68 180 Z" fill="#9a2020" opacity=".6"/>
+          <path d="M30 60 Q-10 100 -5 200 Q5 220 30 220 Q35 160 40 70 Z" fill="#e6c2a0"/>
+          <path d="M170 60 Q200 90 198 170 Q188 188 165 188 Q160 130 158 70 Z" fill="#e6c2a0"/>
+          <circle cx="12" cy="215" r="20" fill="#e6c2a0"/>
+          <circle cx="180" cy="180" r="18" fill="#e6c2a0"/>
+          <rect x="82" y="20" width="36" height="45" fill="#e6c2a0"/>
+          <ellipse cx="100" cy="-15" rx="50" ry="55" fill="#e6c2a0"/>
+          <path d="M50 -50 Q60 -85 100 -90 Q140 -85 150 -50 Q150 -45 140 -47 L125 -62 L110 -50 L100 -65 L90 -50 L75 -62 L60 -47 Q50 -45 50 -50 Z" fill="#2b1a0e"/>
+          <path d="M70 -22 L92 -25 L92 -16 L70 -13 Z" fill="#fff"/>
+          <path d="M108 -25 L130 -22 L130 -13 L108 -16 Z" fill="#fff"/>
+          <ellipse cx="83" cy="-19" rx="3.5" ry="4.5" fill="#000"/>
+          <ellipse cx="119" cy="-19" rx="3.5" ry="4.5" fill="#000"/>
+          <path d="M62 -38 L92 -28 L90 -24 L62 -34 Z" fill="#2b1a0e"/>
+          <path d="M138 -38 L108 -28 L110 -24 L138 -34 Z" fill="#2b1a0e"/>
+          <path d="M82 8 Q100 20 120 5 L116 16 Q100 24 82 16 Z" fill="#5a1818"/>
+          <path d="M85 11 L116 9" stroke="#fff" stroke-width="1.5"/>
+          <line x1="55" y1="-5" x2="68" y2="14" stroke="#a04040" stroke-width="2"/>
+        </g>
+        <g transform="translate(680,540)">
+          <circle r="120" fill="url(#impactGrad)"/>
+          <g fill="#fff">
+            <polygon points="0,-150 18,-30 0,-20 -18,-30"/><polygon points="0,150 18,30 0,20 -18,30"/>
+            <polygon points="-150,0 -30,-18 -20,0 -30,18"/><polygon points="150,0 30,-18 20,0 30,18"/>
+            <polygon points="-110,-110 -22,-30 -10,-15 -30,-22"/><polygon points="110,-110 22,-30 10,-15 30,-22"/>
+            <polygon points="-110,110 -22,30 -10,15 -30,22"/><polygon points="110,110 22,30 10,15 30,22"/>
+          </g>
+          <text x="0" y="12" text-anchor="middle" font-family="Bungee Inline" font-size="64" fill="#d62f2f">BAM!</text>
+        </g>
+        <g transform="translate(820,330) rotate(35)">
+          <rect x="-8" y="80" width="16" height="100" fill="#3a3328" transform="rotate(-25 0 80)"/>
+          <rect x="6" y="80" width="16" height="100" fill="#3a3328" transform="rotate(15 14 80)"/>
+          <rect x="-25" y="172" width="26" height="12" fill="#111" transform="rotate(-25 -12 178)"/>
+          <rect x="22" y="172" width="26" height="12" fill="#111" transform="rotate(15 35 178)"/>
+          <path d="M-22 -20 Q0 -28 22 -20 L20 90 Q0 96 -20 90 Z" fill="#d4a72c"/>
+          <line x1="-5" y1="-15" x2="-7" y2="20" stroke="#4a3a10" stroke-width="2"/>
+          <line x1="5" y1="-15" x2="7" y2="20" stroke="#4a3a10" stroke-width="2"/>
+          <path d="M-22 -20 Q-65 -60 -88 -110" stroke="#e8c8a8" stroke-width="14" fill="none" stroke-linecap="round"/>
+          <path d="M22 -20 Q60 -55 80 -100" stroke="#e8c8a8" stroke-width="14" fill="none" stroke-linecap="round"/>
+          <circle cx="-90" cy="-115" r="10" fill="#e8c8a8"/>
+          <circle cx="82" cy="-105" r="10" fill="#e8c8a8"/>
+          <rect x="-10" y="-50" width="20" height="32" fill="#e8c8a8"/>
+          <ellipse cx="0" cy="-90" rx="40" ry="46" fill="#e8c8a8"/>
+          <path d="M-42 -105 Q-48 -135 -25 -148 Q0 -158 25 -148 Q48 -135 42 -105 Q42 -100 32 -107 L26 -98 L18 -107 L8 -98 L0 -110 L-8 -98 L-18 -107 L-26 -98 L-32 -107 Q-42 -100 -42 -105 Z" fill="#f0d97a"/>
+          <ellipse cx="-13" cy="-90" rx="9" ry="11" fill="#fff"/>
+          <ellipse cx="13" cy="-90" rx="9" ry="11" fill="#fff"/>
+          <ellipse cx="-13" cy="-89" rx="3" ry="4" fill="#3a6b3a"/>
+          <ellipse cx="13" cy="-89" rx="3" ry="4" fill="#3a6b3a"/>
+          <ellipse cx="0" cy="-65" rx="10" ry="14" fill="#220"/>
+          <ellipse cx="0" cy="-63" rx="6" ry="9" fill="#a01010"/>
+          <ellipse cx="-44" cy="-95" rx="4" ry="7" fill="#9fdfff"/>
+          <ellipse cx="46" cy="-92" rx="4" ry="7" fill="#9fdfff"/>
+        </g>
+        <g stroke="#fff" stroke-width="3" opacity=".5">
+          <line x1="500" y1="500" x2="700" y2="430"/>
+          <line x1="490" y1="540" x2="690" y2="470"/>
+          <line x1="480" y1="580" x2="680" y2="510"/>
+          <line x1="500" y1="620" x2="700" y2="550"/>
+        </g>
+        <g fill="#a08070" opacity=".7">
+          <circle cx="650" cy="700" r="40"/><circle cx="700" cy="710" r="55"/>
+          <circle cx="760" cy="700" r="45"/><circle cx="610" cy="715" r="30"/>
+        </g>
+      </svg>
+      <div class="actiontext t7">PUNT!!</div>
+    </div>
+  </section>
+
+  <!-- SCENE 8 -->
+  <section class="scene" id="s8">
+    <div class="finalwrap">
+      <div class="jpbig">いじめっ子の言葉</div>
+      <div class="bigtitle">SAID</div>
+      <div class="coming">COMING THIS SEASON</div>
+      <div class="ep">12 EPISODES · STREAMING EVERYWHERE</div>
+    </div>
+  </section>
+</div>
+
+<div class="scenelabel" id="scenelabel">SCENE 1 / 8 — STUDIO CARD</div>
+<div class="timer" id="timer">00:00 / 02:00</div>
+
+<div class="hud">
+  <button id="restart">↻ REPLAY</button>
+  <button id="muteBtn">🔊 SOUND</button>
+  <button id="skipBtn" class="skip">⏭ SKIP TO GAMES</button>
+</div>
+
+<!-- ============== MINI GAMES SCREEN ============== -->
+<div id="games">
+  <div class="gameshead">
+    <div>
+      <h1>BULLY <span class="red">PRACTICE</span> MODE</h1>
+      <div class="sub">TWO GAMES · 15 SECONDS EACH · TAP FAST</div>
+    </div>
+    <div class="scoreboard">TOTAL SCORE<b id="totalScore">0</b></div>
+  </div>
+
+  <div class="gameswrap">
+    <!-- GAME 1 — KICK MEFO -->
+    <div class="gamebox g1">
+      <div class="label">GAME 01<b>PUNT MEFO</b></div>
+      <div class="scorelabel" id="score1">0</div>
+      <div class="timerlabel">TIME LEFT<b id="time1">15s</b></div>
+      <div class="hint">TAP MEFO TO PUNT</div>
+
+      <div class="gamearea" id="area1">
+        <div class="mefoTarget" id="mefoTarget">
+          <svg width="160" height="220" viewBox="0 0 200 280">
+            <ellipse cx="100" cy="270" rx="35" ry="6" fill="#000" opacity=".4"/>
+            <rect x="88" y="180" width="12" height="70" fill="#3a3328"/>
+            <rect x="100" y="180" width="12" height="70" fill="#3a3328"/>
+            <rect x="84" y="244" width="20" height="10" fill="#111"/>
+            <rect x="100" y="244" width="20" height="10" fill="#111"/>
+            <path d="M78 110 Q100 104 122 110 L120 185 Q100 190 80 185 Z" fill="#d4a72c"/>
+            <line x1="96" y1="115" x2="95" y2="138" stroke="#4a3a10" stroke-width="2"/>
+            <line x1="104" y1="115" x2="105" y2="138" stroke="#4a3a10" stroke-width="2"/>
+            <rect x="68" y="115" width="11" height="62" fill="#e8c8a8"/>
+            <rect x="121" y="115" width="11" height="62" fill="#e8c8a8"/>
+            <circle cx="73" cy="180" r="8" fill="#e8c8a8"/>
+            <circle cx="127" cy="180" r="8" fill="#e8c8a8"/>
+            <rect x="92" y="92" width="16" height="22" fill="#e8c8a8"/>
+            <ellipse cx="100" cy="78" rx="28" ry="32" fill="#e8c8a8"/>
+            <path d="M72 70 Q70 50 88 42 Q100 35 112 42 Q130 50 128 70 Q128 73 120 68 L116 76 L108 68 L100 78 L92 68 L84 76 L80 68 Q72 73 72 70 Z" fill="#f0d97a"/>
+            <ellipse cx="90" cy="78" rx="4" ry="5" fill="#fff"/>
+            <ellipse cx="110" cy="78" rx="4" ry="5" fill="#fff"/>
+            <ellipse cx="90" cy="79" rx="2" ry="2.5" fill="#3a6b3a"/>
+            <ellipse cx="110" cy="79" rx="2" ry="2.5" fill="#3a6b3a"/>
+            <path d="M82 67 L96 70" stroke="#a8852a" stroke-width="2"/>
+            <path d="M118 67 L104 70" stroke="#a8852a" stroke-width="2"/>
+            <ellipse cx="100" cy="92" rx="5" ry="7" fill="#220"/>
+            <ellipse cx="100" cy="93" rx="3" ry="4" fill="#a01010"/>
+            <ellipse cx="76" cy="76" rx="2.5" ry="4" fill="#9fdfff" opacity=".9"/>
+          </svg>
+        </div>
+
+        <div class="gameOverCard" id="over1">
+          <div class="big">TIME!</div>
+          <div class="score">PUNTS: <span id="final1">0</span></div>
+          <button onclick="startGame1()">TRY AGAIN</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- GAME 2 — HOLD OMER -->
+    <div class="gamebox g2">
+      <div class="label">GAME 02<b>HOLD OMER</b></div>
+      <div class="scorelabel" id="score2">0</div>
+      <div class="timerlabel">TIME LEFT<b id="time2">15s</b></div>
+      <div class="hint">TAP TO TIGHTEN GRIP · DON'T LET GO</div>
+
+      <div class="gamearea" id="area2">
+        <div class="windowFrame"></div>
+        <div class="saidInWindow">
+          <svg width="140" height="140" viewBox="0 0 200 200">
+            <path d="M40 80 Q100 60 160 80 L168 200 Q100 210 32 200 Z" fill="#7a1818"/>
+            <ellipse cx="100" cy="50" rx="40" ry="46" fill="#e6c2a0"/>
+            <path d="M62 22 Q70 -5 100 -10 Q130 -5 138 22 Q140 26 130 24 L118 12 L106 22 L100 8 L94 22 L82 12 L70 24 Q62 26 62 22 Z" fill="#2b1a0e"/>
+            <ellipse cx="88" cy="50" rx="4" ry="5" fill="#fff"/>
+            <ellipse cx="112" cy="50" rx="4" ry="5" fill="#fff"/>
+            <ellipse cx="89" cy="51" rx="2.5" ry="3.5" fill="#000"/>
+            <ellipse cx="113" cy="51" rx="2.5" ry="3.5" fill="#000"/>
+            <path d="M78 36 L98 42 L96 46 L78 40 Z" fill="#2b1a0e"/>
+            <path d="M122 36 L102 42 L104 46 L122 40 Z" fill="#2b1a0e"/>
+            <path d="M84 76 Q100 86 116 74 L114 84 Q100 92 84 84 Z" fill="#5a1818"/>
+            <path d="M86 79 L114 78" stroke="#fff" stroke-width="1.5"/>
+            <line x1="60" y1="55" x2="72" y2="72" stroke="#a04040" stroke-width="2"/>
+          </svg>
+        </div>
+
+        <div class="omerHang" id="omerHang">
+          <svg width="90" height="180" viewBox="0 0 100 200">
+            <rect x="40" y="0" width="20" height="20" fill="#e8c8a8"/>
+            <rect x="36" y="18" width="14" height="50" fill="#27384a"/>
+            <rect x="50" y="18" width="14" height="50" fill="#27384a"/>
+            <rect x="32" y="16" width="22" height="8" fill="#111"/>
+            <rect x="50" y="16" width="22" height="8" fill="#111"/>
+            <path d="M28 68 Q50 60 72 68 L70 138 Q50 144 30 138 Z" fill="#3aaad8"/>
+            <rect x="18" y="68" width="10" height="70" fill="#e8c8a8"/>
+            <rect x="72" y="68" width="10" height="70" fill="#e8c8a8"/>
+            <circle cx="23" cy="142" r="8" fill="#e8c8a8"/>
+            <circle cx="77" cy="142" r="8" fill="#e8c8a8"/>
+            <ellipse cx="50" cy="160" rx="24" ry="28" fill="#e8c8a8"/>
+            <path d="M28 160 Q50 172 72 160 Q72 152 50 148 Q28 152 28 160 Z" fill="#3a2820" opacity=".55"/>
+            <ellipse cx="42" cy="148" rx="3" ry="4" fill="#fff"/>
+            <ellipse cx="58" cy="148" rx="3" ry="4" fill="#fff"/>
+            <ellipse cx="42" cy="148" rx="1.5" ry="2" fill="#000"/>
+            <ellipse cx="58" cy="148" rx="1.5" ry="2" fill="#000"/>
+            <ellipse cx="50" cy="170" rx="6" ry="9" fill="#220"/>
+            <ellipse cx="50" cy="171" rx="4" ry="6" fill="#a01010"/>
+            <ellipse cx="32" cy="146" rx="2" ry="3" fill="#9fdfff"/>
+            <ellipse cx="68" cy="146" rx="2" ry="3" fill="#9fdfff"/>
+          </svg>
+        </div>
+
+        <div class="gripbar">
+          <div class="barlabel">GRIP STRENGTH</div>
+          <div class="gripfill" id="gripfill"></div>
+        </div>
+
+        <div class="gameOverCard" id="over2">
+          <div class="big" id="over2Title">HELD!</div>
+          <div class="score">SCORE: <span id="final2">0</span></div>
+          <button onclick="startGame2()">TRY AGAIN</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="gamesfooter">
+    <div class="credit">BULLY SAID — PRACTICE MODE</div>
+    <div>
+      <button onclick="closeGames()">← BACK TO INTRO</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  /* ========== SCENE TIMING ========== */
+  const scenes = [
+    {id:'s1', start:0,    end:8,   label:'1 / 8 — STUDIO CARD'},
+    {id:'s2', start:8,    end:20,  label:'2 / 8 — TITLE DROP'},
+    {id:'s3', start:20,   end:42,  label:'3 / 8 — CHARACTER · SAID'},
+    {id:'s4', start:42,   end:62,  label:'4 / 8 — CHARACTER · OMER OSMAN'},
+    {id:'s5', start:62,   end:82,  label:'5 / 8 — CHARACTER · MEFO'},
+    {id:'s6', start:82,   end:100, label:'6 / 8 — DANGLE FROM WINDOW'},
+    {id:'s7', start:100,  end:114, label:'7 / 8 — SAID PUNTS MEFO'},
+    {id:'s8', start:114,  end:120, label:'8 / 8 — COMING SOON'}
+  ];
+  const TOTAL = 120;
+  let startTime = null, raf = null;
+
+  /* ========== AUDIO (rebuilt: cleaner, scheduler-based, no drift) ========== */
+  let audioCtx = null, masterGain = null, audioStarted = false, muted = false;
+  let schedulerInterval = null;
+  let nextNoteTime = 0;
+  let currentBeat = 0;
+
+  const BPM = 120;
+  const SECONDS_PER_BEAT = 60 / BPM;
+  const SCHEDULE_AHEAD = 0.15;
+  const LOOKAHEAD = 25;
+
+  function initAudio(){
+    if(audioStarted) return;
+    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    masterGain = audioCtx.createGain();
+    masterGain.gain.value = 0.28;
+    const comp = audioCtx.createDynamicsCompressor();
+    comp.threshold.value = -18;
+    comp.ratio.value = 4;
+    comp.attack.value = 0.005;
+    comp.release.value = 0.1;
+    masterGain.connect(comp);
+    comp.connect(audioCtx.destination);
+    audioStarted = true;
+    nextNoteTime = audioCtx.currentTime + 0.1;
+    currentBeat = 0;
+    schedulerInterval = setInterval(scheduler, LOOKAHEAD);
+  }
+
+  function midi(n){return 440 * Math.pow(2,(n-69)/12);}
+
+  function makeDistortion(amount=6){
+    const ws = audioCtx.createWaveShaper();
+    const n = 1024;
+    const curve = new Float32Array(n);
+    for(let i=0;i<n;i++){
+      const x = (i * 2 / n) - 1;
+      curve[i] = Math.tanh(x * amount) / Math.tanh(amount);
+    }
+    ws.curve = curve;
+    ws.oversample = '4x';
+    return ws;
+  }
+
+  function leadNote(freq, time, dur=0.22, vol=0.13){
+    const osc1 = audioCtx.createOscillator();
+    const osc2 = audioCtx.createOscillator();
+    osc1.type = 'sawtooth';
+    osc2.type = 'sawtooth';
+    osc1.frequency.value = freq;
+    osc2.frequency.value = freq * 1.007;
+
+    const dist = makeDistortion(5);
+    const filt = audioCtx.createBiquadFilter();
+    filt.type = 'lowpass';
+    filt.frequency.value = 2200;
+    filt.Q.value = 2;
+
+    const env = audioCtx.createGain();
+    env.gain.setValueAtTime(0, time);
+    env.gain.linearRampToValueAtTime(vol, time + 0.005);
+    env.gain.exponentialRampToValueAtTime(0.001, time + dur);
+
+    osc1.connect(dist);
+    osc2.connect(dist);
+    dist.connect(filt);
+    filt.connect(env);
+    env.connect(masterGain);
+
+    osc1.start(time); osc2.start(time);
+    osc1.stop(time + dur + 0.05);
+    osc2.stop(time + dur + 0.05);
+  }
+
+  function bassNote(freq, time, dur=0.45, vol=0.20){
+    const osc = audioCtx.createOscillator();
+    osc.type = 'sawtooth';
+    osc.frequency.value = freq;
+    const filt = audioCtx.createBiquadFilter();
+    filt.type = 'lowpass';
+    filt.frequency.value = 350;
+    const env = audioCtx.createGain();
+    env.gain.setValueAtTime(0, time);
+    env.gain.linearRampToValueAtTime(vol, time + 0.008);
+    env.gain.exponentialRampToValueAtTime(0.001, time + dur);
+    osc.connect(filt);
+    filt.connect(env);
+    env.connect(masterGain);
+    osc.start(time);
+    osc.stop(time + dur + 0.05);
+  }
+
+  function chordStab(freqs, time, dur=0.18, vol=0.08){
+    freqs.forEach(f=>{
+      const o = audioCtx.createOscillator();
+      o.type = 'sawtooth';
+      o.frequency.value = f;
+      const filt = audioCtx.createBiquadFilter();
+      filt.type = 'lowpass';
+      filt.frequency.value = 1800;
+      const env = audioCtx.createGain();
+      env.gain.setValueAtTime(0, time);
+      env.gain.linearRampToValueAtTime(vol, time + 0.005);
+      env.gain.exponentialRampToValueAtTime(0.001, time + dur);
+      o.connect(filt); filt.connect(env); env.connect(masterGain);
+      o.start(time); o.stop(time + dur + 0.05);
+    });
+  }
+
+  function kick(time, vol=0.42){
+    const o = audioCtx.createOscillator();
+    const env = audioCtx.createGain();
+    o.frequency.setValueAtTime(140, time);
+    o.frequency.exponentialRampToValueAtTime(45, time + 0.13);
+    env.gain.setValueAtTime(vol, time);
+    env.gain.exponentialRampToValueAtTime(0.001, time + 0.22);
+    o.connect(env); env.connect(masterGain);
+    o.start(time); o.stop(time + 0.25);
+  }
+
+  function snare(time, vol=0.20){
+    const buf = audioCtx.createBuffer(1, audioCtx.sampleRate * 0.18, audioCtx.sampleRate);
+    const data = buf.getChannelData(0);
+    for(let i=0;i<data.length;i++) data[i] = (Math.random()*2-1) * Math.pow(1 - i/data.length, 2.5);
+    const src = audioCtx.createBufferSource();
+    src.buffer = buf;
+    const filt = audioCtx.createBiquadFilter();
+    filt.type='highpass'; filt.frequency.value = 1100;
+    const env = audioCtx.createGain();
+    env.gain.value = vol;
+    src.connect(filt); filt.connect(env); env.connect(masterGain);
+    src.start(time);
+  }
+
+  function hat(time, vol=0.05){
+    const buf = audioCtx.createBuffer(1, audioCtx.sampleRate * 0.04, audioCtx.sampleRate);
+    const data = buf.getChannelData(0);
+    for(let i=0;i<data.length;i++) data[i] = (Math.random()*2-1) * Math.pow(1 - i/data.length, 3);
+    const src = audioCtx.createBufferSource();
+    src.buffer = buf;
+    const filt = audioCtx.createBiquadFilter();
+    filt.type='highpass'; filt.frequency.value = 7500;
+    const env = audioCtx.createGain();
+    env.gain.value = vol;
+    src.connect(filt); filt.connect(env); env.connect(masterGain);
+    src.start(time);
+  }
+
+  const BASS_ROOTS = [40, 43, 45, 50];
+  const LEAD_PATTERN = [
+    [64,67,71,67, 64,67,71,74, 71,74,76,74, 71,67,64,67],
+    [67,70,74,70, 67,70,74,76, 74,76,79,76, 74,70,67,70],
+    [69,72,76,72, 69,72,76,79, 76,79,81,79, 76,72,69,72],
+    [62,65,69,65, 62,65,69,72, 69,72,74,72, 69,65,62,65]
+  ];
+
+  function scheduler(){
+    if(!audioCtx) return;
+    while(nextNoteTime < audioCtx.currentTime + SCHEDULE_AHEAD){
+      scheduleBeat(currentBeat, nextNoteTime);
+      nextNoteTime += SECONDS_PER_BEAT / 4;
+      currentBeat++;
+    }
+  }
+
+  function scheduleBeat(beat, time){
+    const sixteenth = beat % 16;
+    const bar = Math.floor(beat / 16) % 4;
+    const root = BASS_ROOTS[bar];
+
+    if(sixteenth % 4 === 0){
+      const q = sixteenth / 4;
+      kick(time, 0.42);
+      if(q === 1 || q === 3) snare(time, 0.20);
+    }
+    if(sixteenth % 2 === 0) hat(time, 0.05);
+
+    if(sixteenth % 2 === 0){
+      bassNote(midi(root), time, SECONDS_PER_BEAT * 0.45, 0.18);
+    }
+
+    if(sixteenth === 0 || sixteenth === 8){
+      chordStab([midi(root+12), midi(root+19)], time, 0.16, 0.07);
+    }
+
+    const leadNoteNum = LEAD_PATTERN[bar][sixteenth];
+    leadNote(midi(leadNoteNum), time, SECONDS_PER_BEAT/4 * 0.85, 0.11);
+  }
+
+  /* ========== SCENE PLAYER ========== */
+  function showScene(idx){
+    document.querySelectorAll('.scene').forEach(s=>{s.style.opacity=0;});
+    const sc = scenes[idx];
+    const el = document.getElementById(sc.id);
+    el.style.opacity = 1;
+    el.style.transition = 'opacity .5s ease';
+    document.getElementById('scenelabel').textContent = 'SCENE ' + sc.label;
+  }
+
+  function tick(){
+    const elapsed = (Date.now() - startTime)/1000;
+    if(elapsed >= TOTAL){
+      showScene(scenes.length-1);
+      document.getElementById('timer').textContent = '02:00 / 02:00';
+      cancelAnimationFrame(raf);
+      setTimeout(openGames, 1500);
+      return;
+    }
+    const idx = scenes.findIndex(s=>elapsed>=s.start && elapsed<s.end);
+    if(idx>=0) showScene(idx);
+
+    const stage = document.getElementById('stage');
+    if((elapsed>=82 && elapsed<86) || (elapsed>=100 && elapsed<102)){
+      stage.classList.add('shake');
+    } else {
+      stage.classList.remove('shake');
+    }
+
+    const mm = String(Math.floor(elapsed/60)).padStart(2,'0');
+    const ss = String(Math.floor(elapsed%60)).padStart(2,'0');
+    document.getElementById('timer').textContent = `${mm}:${ss} / 02:00`;
+
+    raf = requestAnimationFrame(tick);
+  }
+
+  function start(){
+    document.getElementById('startScreen').style.display='none';
+    if(!audioStarted) initAudio();
+    startTime = Date.now();
+    if(raf) cancelAnimationFrame(raf);
+    tick();
+  }
+
+  document.getElementById('startScreen').addEventListener('click', start);
+  document.getElementById('restart').addEventListener('click', ()=>{
+    closeGames();
+    if(raf) cancelAnimationFrame(raf);
+    startTime = Date.now();
+    tick();
+  });
+  document.getElementById('muteBtn').addEventListener('click', (e)=>{
+    muted = !muted;
+    if(masterGain) masterGain.gain.value = muted ? 0 : 0.28;
+    e.target.textContent = muted ? '🔇 MUTED' : '🔊 SOUND';
+  });
+  document.getElementById('skipBtn').addEventListener('click', ()=>{
+    if(!audioStarted) initAudio();
+    openGames();
+  });
+
+  /* ========== MINI GAMES ========== */
+  let totalScore = 0;
+  let g1Score = 0, g1Time = 15, g1Interval = null, g1Active = false;
+  let g2Score = 0, g2Time = 15, g2Grip = 100, g2Interval = null, g2Active = false;
+
+  function openGames(){
+    document.getElementById('games').classList.add('active');
+    if(raf) cancelAnimationFrame(raf);
+    startGame1();
+    startGame2();
+  }
+  function closeGames(){
+    document.getElementById('games').classList.remove('active');
+    stopGame1(); stopGame2();
+  }
+
+  function sfxKick(){
+    if(!audioCtx) return;
+    const t = audioCtx.currentTime;
+    kick(t, 0.5);
+    snare(t+0.01, 0.32);
+    const o = audioCtx.createOscillator();
+    o.type='sawtooth';
+    o.frequency.setValueAtTime(800, t);
+    o.frequency.exponentialRampToValueAtTime(120, t+0.25);
+    const e = audioCtx.createGain();
+    e.gain.setValueAtTime(0, t);
+    e.gain.linearRampToValueAtTime(0.14, t+0.01);
+    e.gain.exponentialRampToValueAtTime(0.001, t+0.3);
+    const f = audioCtx.createBiquadFilter();
+    f.type='bandpass'; f.frequency.value = 800;
+    o.connect(f); f.connect(e); e.connect(masterGain);
+    o.start(t); o.stop(t+0.32);
+  }
+  function sfxGrip(){
+    if(!audioCtx) return;
+    const t = audioCtx.currentTime;
+    leadNote(midi(72 + Math.floor(Math.random()*5)), t, 0.1, 0.10);
+  }
+  function sfxFall(){
+    if(!audioCtx) return;
+    const t = audioCtx.currentTime;
+    const o = audioCtx.createOscillator();
+    o.type='sawtooth';
+    o.frequency.setValueAtTime(600, t);
+    o.frequency.exponentialRampToValueAtTime(80, t+0.8);
+    const e = audioCtx.createGain();
+    e.gain.setValueAtTime(0.2, t);
+    e.gain.exponentialRampToValueAtTime(0.001, t+0.9);
+    o.connect(e); e.connect(masterGain);
+    o.start(t); o.stop(t+0.95);
+  }
+
+  /* GAME 1 */
+  function startGame1(){
+    g1Score = 0; g1Time = 15; g1Active = true;
+    document.getElementById('score1').textContent = '0';
+    document.getElementById('time1').textContent = '15s';
+    document.getElementById('over1').classList.remove('show');
+    placeMefo();
+    if(g1Interval) clearInterval(g1Interval);
+    g1Interval = setInterval(()=>{
+      g1Time--;
+      document.getElementById('time1').textContent = g1Time + 's';
+      if(g1Time<=0) endGame1();
+    }, 1000);
+  }
+  function placeMefo(){
+    const target = document.getElementById('mefoTarget');
+    target.classList.remove('flying');
+    const x = 25 + Math.random()*50;
+    const y = 30 + Math.random()*40;
+    target.style.left = x + '%';
+    target.style.top = y + '%';
+  }
+  function endGame1(){
+    g1Active = false;
+    if(g1Interval){clearInterval(g1Interval);g1Interval=null;}
+    document.getElementById('final1').textContent = g1Score;
+    document.getElementById('over1').classList.add('show');
+    updateTotal();
+  }
+  function stopGame1(){
+    g1Active = false;
+    if(g1Interval){clearInterval(g1Interval);g1Interval=null;}
+  }
+  document.getElementById('mefoTarget').addEventListener('click', (e)=>{
+    if(!g1Active) return;
+    e.stopPropagation();
+    g1Score++;
+    document.getElementById('score1').textContent = g1Score;
+    sfxKick();
+    const t = e.currentTarget;
+    t.classList.add('flying');
+    const hint = document.createElement('div');
+    hint.className = 'tapHint show';
+    hint.textContent = 'PUNT!';
+    hint.style.left = t.style.left;
+    hint.style.top = t.style.top;
+    document.getElementById('area1').appendChild(hint);
+    setTimeout(()=>hint.remove(), 600);
+    setTimeout(placeMefo, 350);
+  });
+
+  /* GAME 2 */
+  function startGame2(){
+    g2Score = 0; g2Time = 15; g2Grip = 100; g2Active = true;
+    document.getElementById('score2').textContent = '0';
+    document.getElementById('time2').textContent = '15s';
+    document.getElementById('gripfill').style.width = '100%';
+    document.getElementById('omerHang').classList.remove('fall');
+    document.getElementById('omerHang').style.top = '50%';
+    document.getElementById('over2').classList.remove('show');
+    if(g2Interval) clearInterval(g2Interval);
+    g2Interval = setInterval(()=>{
+      g2Time -= 0.1;
+      g2Grip -= 1.5 + (15-g2Time)*0.08;
+      if(g2Grip < 0) g2Grip = 0;
+      document.getElementById('gripfill').style.width = g2Grip + '%';
+      document.getElementById('time2').textContent = Math.max(0, g2Time).toFixed(1) + 's';
+      if(Math.floor(g2Time*10) % 5 === 0){
+        g2Score++;
+        document.getElementById('score2').textContent = g2Score;
+      }
+      if(g2Grip<=0) endGame2(false);
+      else if(g2Time<=0) endGame2(true);
+    }, 100);
+  }
+  function endGame2(success){
+    g2Active = false;
+    if(g2Interval){clearInterval(g2Interval);g2Interval=null;}
+    if(!success){
+      document.getElementById('omerHang').classList.add('fall');
+      document.getElementById('over2Title').textContent = 'DROPPED!';
+      document.getElementById('over2Title').style.color = 'var(--blood)';
+      sfxFall();
+    } else {
+      g2Score += 50;
+      document.getElementById('score2').textContent = g2Score;
+      document.getElementById('over2Title').textContent = 'HELD ON!';
+      document.getElementById('over2Title').style.color = 'var(--gold)';
+    }
+    document.getElementById('final2').textContent = g2Score;
+    setTimeout(()=>{
+      document.getElementById('over2').classList.add('show');
+      updateTotal();
+    }, success ? 200 : 900);
+  }
+  function stopGame2(){
+    g2Active = false;
+    if(g2Interval){clearInterval(g2Interval);g2Interval=null;}
+  }
+  document.getElementById('area2').addEventListener('click', ()=>{
+    if(!g2Active) return;
+    g2Score += 2;
+    g2Grip = Math.min(100, g2Grip + 8);
+    document.getElementById('score2').textContent = g2Score;
+    document.getElementById('gripfill').style.width = g2Grip + '%';
+    sfxGrip();
+    const omer = document.getElementById('omerHang');
+    omer.style.transform = 'translate(-50%,0) rotate(' + ((Math.random()-0.5)*8) + 'deg)';
+    setTimeout(()=>{omer.style.transform = 'translate(-50%,0) rotate(0)';}, 100);
+  });
+
+  function updateTotal(){
+    totalScore = g1Score + g2Score;
+    document.getElementById('totalScore').textContent = totalScore;
+  }
+</script>
+</body>
+</html>
